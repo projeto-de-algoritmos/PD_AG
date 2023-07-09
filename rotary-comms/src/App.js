@@ -24,7 +24,12 @@ function RotaryCommunications(props) {
 
   const handleChangenumNodes = (event) => {
     const value = event.target.value;
-    setNumNodes(value);
+    if (value <= 9) {
+      setNumNodes(value);
+    } else {
+      // Caso contrário, defina o valor máximo permitido
+      setNumNodes(9);
+    }
   };
 
   const bellmanFord = (source) => {
@@ -182,24 +187,29 @@ function RotaryCommunications(props) {
       <Typography variant="h5" style={{ marginBottom: 20 }}>
         Roteamento de Rede de Telecomunicações
       </Typography>
-      <label htmlFor="campo-texto">Insira a quantidade de nós da rede de comunicações:</label>
-      <TextField
-              value={numNodes}
-              onChange={(event) => handleChangenumNodes(event)}
-              type="number"
-              label={`Quantidade de Nós`}
-              variant="outlined"
-              size="small"
-              style={{ marginRight: 30, marginBottom: 10 }}
-              disabled={!editavel}
-      />
-
-      <Button onClick={handleClickBotao} variant="contained" color="primary">
-        Confirmar
-      </Button>
-
-      <div className="center">{renderInputFields()}</div>
-
+      <div>
+        <label  style={{ marginTop: 20 }}>Insira a quantidade de nós da rede de comunicações:</label>
+        <br></br>
+        <br></br>
+        <TextField
+                value={numNodes}
+                onChange={(event) => handleChangenumNodes(event)}
+                type="number"
+                label={`Quantidade de Nós`}
+                variant="outlined"
+                size="small"
+                style={{ marginRight: 70, marginBottom: 10 }}
+                disabled={!editavel}
+                
+        />
+        <br></br>
+        <Button onClick={handleClickBotao} variant="contained" color="primary">
+          Confirmar
+        </Button>
+      </div>
+      <br></br>
+      <div className="center" style={{ marginRight: 70, marginBottom: 250 }}>{renderInputFields()}</div>
+      <br></br>
       <Button variant="contained" color="primary" onClick={calculateOptimalRoutes}>
         Encontrar Rotas
       </Button>
