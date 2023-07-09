@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { AppBar, Button, TextField, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import './App.css';
 
 function RotaryCommunications(props) {
-  const [numNodes, setNumNodes] = useState(5);
-  const [graph, setGraph] = useState(Array(numNodes).fill(Array(numNodes).fill(null)));
+  const [numNodes, setNumNodes] = useState(0);
+  //const [graph, setGraph] = useState(Array(numNodes).fill(Array(numNodes).fill(null)));
+  const [editavel, setEditavel] = useState(true)
+  const [graph, setGraph] = useState(() => {
+    const initialGraph = Array(numNodes).fill(null).map(() => Array(numNodes).fill({ value: null }));
+    return initialGraph;
+  });
   const [result, setResult] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -14,6 +20,11 @@ function RotaryCommunications(props) {
     console.log(updatedGraph);
     updatedGraph[row][col] = value !== '' ? parseFloat(value) : null;
     setGraph(updatedGraph);
+  };
+
+  const handleChangenumNodes = (event) => {
+    const value = event.target.value;
+    setNumNodes(value);
   };
 
   const bellmanFord = (source) => {
@@ -135,27 +146,35 @@ function RotaryCommunications(props) {
     const inputFields = [];
     for (let i = 0; i < numNodes; i++) {
       const row = [];
-      console.log(graph, numNodes);
       for (let j = 0; j < numNodes; j++) {
         const value = graph[i] && graph[i][j] !== null ? String(graph[i][j]) : '';
         const key = `input-${i}-${j}`;
-
+  
         row.push(
-          <TextField
-            key={key}
-            value={value}
-            onChange={(event) => handleChange(event, i, j)}
-            type="number"
-            label={`Custo (${i}, ${j})`}
-            variant="outlined"
-            size="small"
-            style={{ marginRight: 10, marginBottom: 10 }}
-          />
+          <td key={key}>
+            <TextField
+              value={value}
+              onChange={(event) => handleChange(event, i, j)}
+              type="number"
+              label={`Custo (${i}, ${j})`}
+              variant="outlined"
+              size="small"
+              style={{ marginRight: 10, marginBottom: 10 }}
+            />
+          </td>
         );
       }
-      inputFields.push(<div key={`row-${i}`}>{row}</div>);
+      inputFields.push(<tr key={`row-${i}`}>{row}</tr>);
     }
-    return inputFields;
+    return (
+      <table>
+        <tbody>{inputFields}</tbody>
+      </table>
+    );
+  };
+  
+  const handleClickBotao = () => {
+    setEditavel(false);
   };
 
   return (
@@ -163,8 +182,23 @@ function RotaryCommunications(props) {
       <Typography variant="h5" style={{ marginBottom: 20 }}>
         Roteamento de Rede de Telecomunicações
       </Typography>
+      <label htmlFor="campo-texto">Insira a quantidade de nós da rede de comunicações:</label>
+      <TextField
+              value={numNodes}
+              onChange={(event) => handleChangenumNodes(event)}
+              type="number"
+              label={`Quantidade de Nós`}
+              variant="outlined"
+              size="small"
+              style={{ marginRight: 30, marginBottom: 10 }}
+              disabled={!editavel}
+      />
 
-      <div style={{ marginBottom: 20 }}>{renderInputFields()}</div>
+      <Button onClick={handleClickBotao} variant="contained" color="primary">
+        Confirmar
+      </Button>
+
+      <div className="center">{renderInputFields()}</div>
 
       <Button variant="contained" color="primary" onClick={calculateOptimalRoutes}>
         Encontrar Rotas
