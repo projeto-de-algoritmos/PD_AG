@@ -36,12 +36,23 @@ Este projeto irá ajudar a otimizar o roteamento em uma rede de telecomunicaçõ
 O vídeo de apresentação se encontra no diretório principal do projeto, de nome "apresentacao5PA.mp4".
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+![Print 1](rotary-comms/public/assets/print1.png)
+![Print 2](rotary-comms/public/assets/print2.png)
+![Print 3](rotary-comms/public/assets/print3.png)
 
 ## Instalação 
 **Linguagem**: Javascript<br>
 **Framework**: React<br>
 
-Para rodar o projeto, é necessário ter acesso ao npm e node.js instalados. Após tê-los, é possível rodar o comando com:
+Para rodar o projeto, é necessário ter acesso ao npm e node.js instalados. Após tê-los, é possível rodar o comando primeiramente acessando a pasta 'rotary-comms':
 
-npm start
+`cd rotary-comms`
+
+E, logo após, iniciando o programa:
+
+`npm start`
+
+O programa irá iniciar em uma nova aba no servidor local, de endereço padrão:
+
+`http://localhost:3000`
