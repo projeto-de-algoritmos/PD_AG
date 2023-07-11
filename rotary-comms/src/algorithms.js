@@ -15,7 +15,6 @@ export function bellmanFord(source, numNodes, graph) {
     for (let u = 0; u < numNodes; u++) {
       for (let v = 0; v < numNodes; v++) {
         if (graph[u][v] !== null && distances[u] + graph[u][v] < distances[v]) {
-            console.log('teste');
           throw new Error('O grafo contém ciclo negativo!');
         }
       }

@@ -7,7 +7,6 @@ function RotaryCommunications() {
     const [editavel, setEditavel] = useState(true)
     const [graph, setGraph] = useState(() => {
         const initialGraph = Array.from({ length: numNodes }, () => Array(numNodes).fill(null));
-        console.log(initialGraph);
         return initialGraph;
       });      
     const [result, setResult] = useState('');
@@ -16,7 +15,6 @@ function RotaryCommunications() {
     const handleChange = (event, row, col) => {
         const value = event.target.value;
         const updatedGraph = [...graph];
-        console.log(updatedGraph);
         updatedGraph[row][col] = updatedGraph[row] && !isNaN(parseFloat(value)) ? parseFloat(value) : null;
         setGraph(updatedGraph);
     };
@@ -33,8 +31,8 @@ function RotaryCommunications() {
       var value = event.target.value;
       if (value > 9) {
           value = 9;
-      } else if (value < 0) {
-          value = 0;
+      } else if (value < 1) {
+          value = 1;
       }
       
       setNumNodes(value);
@@ -48,7 +46,6 @@ function RotaryCommunications() {
             }
             return row;
           });
-          console.log("oi")
           while (updatedGraph.length <= numNodes) {
             updatedGraph.push(Array(numNodes).fill(null));
           }
@@ -65,9 +62,6 @@ function RotaryCommunications() {
       
           return updatedGraph;
         });
-      
-      console.log(graph);
-      
   }; 
 
     return (

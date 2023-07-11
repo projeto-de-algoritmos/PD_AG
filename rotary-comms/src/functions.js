@@ -33,7 +33,6 @@ export function renderInputFields (params) {
 
   export function renderResult (params) {
     const { result, errorMessage } = params;
-    console.log(result, errorMessage);
     if (errorMessage !== '') {
       return <Alert severity="error">{errorMessage}</Alert>;
     }
