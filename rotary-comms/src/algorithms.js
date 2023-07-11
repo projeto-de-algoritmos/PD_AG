@@ -1,21 +1,17 @@
-export function bellmanFord(source, numNodes, graph) {
+export function bellmanFord(source, graph) {
+    const numNodes = graph.length;
     const distances = Array(numNodes).fill(Infinity);
     distances[source] = 0;
   
-    for (let _ = 0; _ < numNodes - 1; _++) {
+    for (let i = 0; i < numNodes - 1; i++) {
       for (let u = 0; u < numNodes; u++) {
         for (let v = 0; v < numNodes; v++) {
           if (graph[u][v] !== null) {
-            distances[v] = Math.min(distances[v], distances[u] + graph[u][v]);
+            const weight = graph[u][v];
+            if (distances[u] + weight < distances[v]) {
+              distances[v] = distances[u] + weight;
+            }
           }
-        }
-      }
-    }
-  
-    for (let u = 0; u < numNodes; u++) {
-      for (let v = 0; v < numNodes; v++) {
-        if (graph[u][v] !== null && distances[u] + graph[u][v] < distances[v]) {
-          throw new Error('O grafo contém ciclo negativo!');
         }
       }
     }
@@ -23,37 +19,39 @@ export function bellmanFord(source, numNodes, graph) {
     return distances;
   }
   
-  export function longestCommonSubsequence(route1, route2) {
-    const m = route1.length;
-    const n = route2.length;
-    const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
   
-    for (let i = 1; i <= m; i++) {
-      for (let j = 1; j <= n; j++) {
-        if (route1[i - 1] === route2[j - 1]) {
-          dp[i][j] = dp[i - 1][j - 1] + 1;
+  export function longestCommonSubsequence(routes) {
+    const numRoutes = routes.length;
+    const lengths = Array.from({ length: numRoutes + 1 }, () => Array(numRoutes + 1).fill(0));
+  
+    for (let i = 1; i <= numRoutes; i++) {
+      for (let j = 1; j <= numRoutes; j++) {
+        if (routes[i - 1].toString() === routes[j - 1].toString()) {
+          lengths[i][j] = lengths[i - 1][j - 1] + 1;
         } else {
-          dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+          lengths[i][j] = Math.max(lengths[i - 1][j], lengths[i][j - 1]);
         }
       }
     }
   
-    const lcs = [];
-    let i = m;
-    let j = n;
+    const commonPatterns = [];
+    let i = numRoutes;
+    let j = numRoutes;
   
     while (i > 0 && j > 0) {
-      if (route1[i - 1] === route2[j - 1]) {
-        lcs.unshift(route1[i - 1]);
+      if (routes[i - 1].toString() === routes[j - 1].toString()) {
+        commonPatterns.unshift(routes[i - 1]);
         i--;
         j--;
-      } else if (dp[i - 1][j] >dp[i][j - 1]) {
+      } else if (lengths[i - 1][j] > lengths[i][j - 1]) {
         i--;
       } else {
         j--;
       }
     }
   
-    return lcs;
+    return commonPatterns;
   }
+  
+  
   

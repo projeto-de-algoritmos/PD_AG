@@ -111,7 +111,7 @@ function RotaryCommunications() {
                 variant="contained"
                 disabled={!isAllFilled() || editavel}
                 color="primary"
-                onClick={() => calculateOptimalRoutes({ numNodes, setResult, setErrorMessage })}
+                onClick={() => calculateOptimalRoutes({ numNodes, graph, setResult, setErrorMessage })}
             >
                 Encontrar Rotas
             </Button>

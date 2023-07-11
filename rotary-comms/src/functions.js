@@ -45,7 +45,7 @@ export function renderInputFields (params) {
     return (
       <div>
         <Typography variant="h6">Rotas ótimas:</Typography>
-        {result.optimalRoutes.map((routes, i) => (
+        {result.results.map((routes, i) => (
           <Typography key={i} variant="body1">
             Origem {i}: {JSON.stringify(routes)}
           </Typography>
@@ -67,30 +67,53 @@ export function renderInputFields (params) {
     );
   };
 
-  export function calculateOptimalRoutes (params) {
-    const { numNodes, setResult, setErrorMessage } = params;
-    
+  export function calculateOptimalRoutes(params) {
+    const { numNodes, graph, setResult, setErrorMessage } = params;
+    const results = [];
     try {
-      const optimalRoutes = [];
-      for (let i = 0; i < numNodes; i++) {
-        const distances = bellmanFord(i);
-        optimalRoutes.push(distances.map((distance, j) => [j, distance]));
-      }
-
-      const commonSubsequence = [];
-      for (let i = 0; i < numNodes; i++) {
-        for (let j = i + 1; j < numNodes; j++) {
-          const route1 = optimalRoutes[i].map(([node]) => node);
-          const route2 = optimalRoutes[j].map(([node]) => node);
-          const lcs = longestCommonSubsequence(route1, route2);
-          commonSubsequence.push(lcs);
+  
+        for (let source = 0; source < numNodes; source++) {
+            const shortestPaths = bellmanFord(source, graph);
+        
+            for (let target = 0; target < numNodes; target++) {
+                if (target !== source) {
+                    const { route, weight } = findShortestRoute(graph, shortestPaths, source, target);
+                    results.push({ source, target, route, weight });
+                }
+            }
+        }
+    
+        const routes = results.map(result => result.route);
+        const commonSubsequence = longestCommonSubsequence(routes);
+  
+        setResult({ results, commonSubsequence });
+        setErrorMessage('');
+    } catch (error) {
+        setResult({});
+        setErrorMessage(error.message);
+    }
+  }
+  
+  function findShortestRoute(graph, shortestPaths, source, target) {
+    const route = [];
+    let currentNode = target;
+    route.push(currentNode);
+    let weight = 0;
+  
+    while (currentNode !== source) {
+      for (let prevNode = 0; prevNode < graph.length; prevNode++) {
+        if (graph[prevNode][currentNode] !== null) {
+          const edgeWeight = graph[prevNode][currentNode];
+          if (shortestPaths[currentNode] === shortestPaths[prevNode] + edgeWeight) {
+            currentNode = prevNode;
+            route.unshift(currentNode);
+            weight += edgeWeight;
+            break;
+          }
         }
       }
-
-      setResult({ optimalRoutes, commonSubsequence });
-      setErrorMessage('');
-    } catch (error) {
-      setResult({});
-      setErrorMessage(error.message);
     }
-  };
+  
+    return { route, weight };
+  }
+  
