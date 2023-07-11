@@ -41,15 +41,21 @@ export function renderInputFields (params) {
     if (!result) {
       return null;
     }
-
+    
     return (
       <div>
         <Typography variant="h6">Rotas ótimas:</Typography>
-        {result.results.map((routes, i) => (
-          <Typography key={i} variant="body1">
-            Origem {i}: {JSON.stringify(routes)}
-          </Typography>
-        ))}
+        {result.results.length ? result.results.map((routes, i) => {
+            const { source, target, route, weight } = routes;
+            return (
+                <Typography key={i} variant="body1">
+                    Origem {i}: De {source} até {target}, rota {route}, com peso total {weight}
+                </Typography>
+            )
+        }) : <Typography variant="body1">
+                Nenhuma rota encontrada
+            </Typography>
+        }
 
         <Typography variant="h6" style={{ marginTop: 20 }}>
           Padrão comum nas rotas ótimas:
