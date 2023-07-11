@@ -21,6 +21,10 @@ function RotaryCommunications() {
         setGraph(updatedGraph);
     };
 
+    const isAllFilled = () => {
+        return graph.length > 0 && graph.every(row => row.length > 0 && row.every(value => value !== null && value !== ''));
+    };
+      
     const handleClickBotao = () => {
         setEditavel(false);
     };
@@ -29,8 +33,8 @@ function RotaryCommunications() {
         var value = event.target.value;
         if (value > 9) {
             value = 9;
-        } else if (value < 0) {
-            value = 0;
+        } else if (value < 1) {
+            value = 1;
         }
         
         setNumNodes(value);
@@ -57,39 +61,48 @@ function RotaryCommunications() {
     };
 
     return (
-        <div>
-        <Typography variant="h5" style={{ marginBottom: 20 }}>
-            Roteamento de Rede de Telecomunicações
-        </Typography>
-        <div>
-            <label  style={{ marginTop: 20 }}>Insira a quantidade de nós da rede de comunicações:</label>
-            <br></br>
-            <br></br>
-            <TextField
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography variant="h5" style={{ marginBottom: 20 }}>
+                Roteamento de Rede de Telecomunicações
+            </Typography>
+            
+            <div style={{ textAlign: 'center', marginTop: 20 }}>
+                <label htmlFor="numNodes">Insira a quantidade de nós da rede de comunicações:</label>
+                <br />
+                <br />
+                <TextField
+                    id="numNodes"
                     value={numNodes}
                     onChange={(event) => handleChangenumNodes(event)}
                     type="number"
-                    label={`Quantidade de Nós`}
+                    label="Quantidade de Nós"
                     variant="outlined"
                     size="small"
-                    style={{ marginRight: 70, marginBottom: 10 }}
+                    style={{ marginBottom: 10 }}
                     disabled={!editavel}
-                    
-            />
-            <br></br>
-            <Button onClick={handleClickBotao} variant="contained" color="primary">
-            Confirmar
+                />
+                <br />
+                <Button onClick={handleClickBotao} disabled={numNodes < 1} variant="contained" color="primary">
+                    Confirmar
+                </Button>
+            </div>
+            
+            <div style={{ margin: '20px auto', textAlign: 'center' }}>
+                {renderInputFields({ numNodes, graph, handleChange })}
+            </div>
+            
+            <Button
+                variant="contained"
+                disabled={!isAllFilled() || editavel}
+                color="primary"
+                onClick={() => calculateOptimalRoutes({ numNodes, setResult, setErrorMessage })}
+            >
+                Encontrar Rotas
             </Button>
-        </div>
-        <br></br>
-        <div className="center" style={{ marginRight: 70, marginBottom: 250 }}>{renderInputFields({ numNodes, graph, handleChange })}</div>
-        <br></br>
-        <Button variant="contained" color="primary" onClick={() => calculateOptimalRoutes({ numNodes, setResult, setErrorMessage })}>
-            Encontrar Rotas
-        </Button>
 
-        <div style={{ marginTop: 20 }}>{result && renderResult({ result, errorMessage })}</div>
+            <div style={{ marginTop: 20 }}>{result && renderResult({ result, errorMessage })}</div>
         </div>
+
     );
 }
   

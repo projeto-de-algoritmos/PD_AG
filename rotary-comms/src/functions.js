@@ -21,7 +21,7 @@ export function renderInputFields (params) {
               label={`Custo (${i}, ${j})`}
               variant="outlined"
               size="small"
-              style={{ marginRight: 10, marginBottom: 10 }}
+              style={{ marginRight: 10, marginBottom: 10, minWidth: '150' }}
             />
           </td>
         );
@@ -31,7 +31,9 @@ export function renderInputFields (params) {
     return inputFields;
   };
 
-  export function renderResult (result, errorMessage) {
+  export function renderResult (params) {
+    const { result, errorMessage } = params;
+    console.log(result, errorMessage);
     if (errorMessage !== '') {
       return <Alert severity="error">{errorMessage}</Alert>;
     }
