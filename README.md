@@ -32,12 +32,15 @@ Visualização e Relatório: Exibir as rotas ótimas entre os pares de nós na r
 
 Este projeto irá ajudar a otimizar o roteamento em uma rede de telecomunicações, encontrando as rotas mais eficientes entre os nós da rede e identificando padrões comuns nas rotas ótimas, o que pode ser valioso para melhorar o desempenho e a eficiência da rede como um todo.
 
+## Vídeo
+O vídeo de apresentação se encontra no diretório principal do projeto, de nome "apresentacao5PA.mp4".
+
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
+**Linguagem**: Javascript<br>
+**Framework**: React<br>
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
 ## Uso 
