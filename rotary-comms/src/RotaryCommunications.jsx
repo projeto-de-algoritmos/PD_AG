@@ -30,35 +30,45 @@ function RotaryCommunications() {
     };
 
     const handleChangenumNodes = (event) => {
-        var value = event.target.value;
-        if (value > 9) {
-            value = 9;
-        } else if (value < 1) {
-            value = 1;
-        }
-        
-        setNumNodes(value);
-        
-        setGraph((prevGraph) => {
-            const updatedGraph = prevGraph.map((row, rowIndex) => {
-              if (rowIndex < numNodes) {
-                return row.slice(0, numNodes).concat(
-                  Array(numNodes - row.length).fill(null)
-                );
-              }
-              return row;
-            });
-
-            while (updatedGraph.length <= numNodes) {
-              updatedGraph.push(Array(numNodes).fill(null));
+      var value = event.target.value;
+      if (value > 9) {
+          value = 9;
+      } else if (value < 0) {
+          value = 0;
+      }
+      
+      setNumNodes(value);
+      
+      setGraph((prevGraph) => {
+          const updatedGraph = prevGraph.map((row, rowIndex) => {
+            if (rowIndex < numNodes) {
+              return row.slice(0, numNodes).concat(
+                Array(numNodes - row.length).fill(null)
+              );
             }
-        
-            return updatedGraph;
+            return row;
           });
-        
-        console.log(graph);
-        
-    };
+          console.log("oi")
+          while (updatedGraph.length <= numNodes) {
+            updatedGraph.push(Array(numNodes).fill(null));
+          }
+
+          while (updatedGraph.length > value) {
+            updatedGraph.pop();
+          }
+      
+          updatedGraph.forEach((row) => {
+            while (row.length > value) {
+              row.pop();
+            }
+          });
+      
+          return updatedGraph;
+        });
+      
+      console.log(graph);
+      
+  }; 
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
