@@ -15,12 +15,13 @@ export function renderInputFields (params) {
         row.push(
           <td key={key}>
             <TextField
-              value={value}
+              value={i===j ? 0 : value}
               onChange={(event) => handleChange(event, i, j)}
               type="number"
               label={`Custo (${i}, ${j})`}
               variant="outlined"
               size="small"
+              disabled={i===j}
               style={{ marginRight: 10, marginBottom: 10, minWidth: '150' }}
             />
           </td>
@@ -53,11 +54,15 @@ export function renderInputFields (params) {
         <Typography variant="h6" style={{ marginTop: 20 }}>
           Padrão comum nas rotas ótimas:
         </Typography>
-        {result.commonSubsequence.map((lcs, i) => (
+        {result.commonSubsequence.length ?
+            result.commonSubsequence.map((lcs, i) => (
           <Typography key={i} variant="body1">
             Origem {i} e Origem {i + 1}: {JSON.stringify(lcs)}
           </Typography>
-        ))}
+        )) : <Typography variant="body1">
+                Nenhum padrão possível
+            </Typography>
+        }
       </div>
     );
   };

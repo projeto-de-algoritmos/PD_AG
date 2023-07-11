@@ -20,7 +20,19 @@ function RotaryCommunications() {
     };
 
     const isAllFilled = () => {
-        return graph.length > 0 && graph.every(row => row.length > 0 && row.every(value => value !== null && value !== ''));
+        if (graph.length === 0) {
+          return false; // If graph is empty, return false
+        }
+      
+        for (let rowIndex = 1; rowIndex < graph.length; rowIndex++) {
+          const row = graph[rowIndex];
+      
+          if (row.length === 0 || row.some((value, columnIndex) => rowIndex !== columnIndex && (value === null || value === ''))) {
+            return false; // If any row is empty or has a non-diagonal null or empty value, return false
+          }
+        }
+      
+        return true; // All conditions met, return true
     };
       
     const handleClickBotao = () => {
