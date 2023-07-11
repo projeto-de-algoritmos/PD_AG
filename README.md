@@ -1,4 +1,4 @@
-# NomedoProjeto
+# Roteamento de Rede de Telecomunicações
 
 **Número da Lista**: 5<br>
 **Conteúdo da Disciplina**: 5<br>
@@ -41,14 +41,7 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 ## Instalação 
 **Linguagem**: Javascript<br>
 **Framework**: React<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
-## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+Para rodar o projeto, é necessário ter acesso ao npm e node.js instalados. Após tê-los, é possível rodar o comando com:
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
-
-
-
-
+npm start
