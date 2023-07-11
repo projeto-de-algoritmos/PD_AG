@@ -82,7 +82,7 @@ function RotaryCommunications() {
                     disabled={!editavel}
                 />
                 <br />
-                <Button onClick={handleClickBotao} disabled={numNodes < 1} variant="contained" color="primary">
+                <Button onClick={handleClickBotao} disabled={numNodes < 1 || !editavel} variant="contained" color="primary">
                     Confirmar
                 </Button>
             </div>
